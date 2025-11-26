@@ -4,76 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Carb Closet | PCOS Nutrition Helper</title>
-    <!-- Tailwind CSS -->
+    
+    <link rel="stylesheet" href="style.css">
+    
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Pacifico for headers, Quicksand for body -->
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Phosphor Icons -->
+    
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        'header': ['Pacifico', 'cursive'],
-                        'body': ['Quicksand', 'sans-serif'],
-                    },
-                    colors: {
-                        'soft-pink': '#ffe4e6',
-                        'deep-rose': '#be185d',
-                        'sage-green': '#dcfce7',
-                        'forest-green': '#15803d',
-                        'cream': '#fffbf0',
-                        'lavender': '#f3e8ff',
-                        'grape': '#7e22ce',
-                    },
-                    boxShadow: {
-                        'cute': '0 8px 20px -5px rgba(255, 182, 193, 0.4)',
-                        'inner-soft': 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.05)',
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        body {
-            background-color: #fff0f5;
-            background-image: radial-gradient(#ffe4e6 15%, transparent 16%), radial-gradient(#ffe4e6 15%, transparent 16%);
-            background-size: 60px 60px;
-            background-position: 0 0, 30px 30px;
-        }
-        .scrollbar-hide::-webkit-scrollbar {
-            display: none;
-        }
-        .scrollbar-hide {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-        }
-        .wiggle:hover {
-            animation: wiggle 1s ease-in-out infinite;
-        }
-        @keyframes wiggle {
-            0%, 100% { transform: rotate(-3deg); }
-            50% { transform: rotate(3deg); }
-        }
-        .pop-in {
-            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        @keyframes popIn {
-            from { transform: scale(0.9); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script src="tailwind.config.js"></script>
 </head>
 <body class="font-body text-gray-700 min-h-screen pb-20">
 
-    <!-- Navbar -->
     <nav class="sticky top-0 z-50 glass-panel shadow-sm px-6 py-4 flex justify-between items-center rounded-b-3xl mx-2 mt-2">
         <div class="flex items-center gap-2">
             <span class="text-3xl">🎀</span>
@@ -84,7 +27,6 @@
         </button>
     </nav>
 
-    <!-- Hero Section -->
     <div class="max-w-4xl mx-auto px-4 pt-10 pb-6 text-center">
         <h2 class="text-3xl md:text-5xl font-bold text-deep-rose mb-4">Don't Eat Naked Carbs!</h2>
         <p class="text-lg md:text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
@@ -92,7 +34,6 @@
             <span class="font-bold text-deep-rose">"Clothing"</span> your carbs with protein and fats helps flatten the glucose curve and keep insulin in check. ✨
         </p>
 
-        <!-- Search Bar -->
         <div class="relative max-w-lg mx-auto transform transition-all hover:scale-105">
             <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                 <i class="ph ph-magnifying-glass text-xl text-deep-rose"></i>
@@ -103,7 +44,6 @@
         </div>
     </div>
 
-    <!-- Category Filter -->
     <div class="max-w-4xl mx-auto px-4 mb-8">
         <div class="flex gap-3 overflow-x-auto scrollbar-hide py-2 justify-start md:justify-center">
             <button onclick="filterCategory('all')" class="category-btn active px-6 py-2 rounded-full bg-deep-rose text-white font-bold shadow-md whitespace-nowrap transition-transform hover:scale-105">All ✨</button>
@@ -114,27 +54,20 @@
         </div>
     </div>
 
-    <!-- Grid Container -->
     <div id="carbGrid" class="max-w-5xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Cards will be injected here by JS -->
-    </div>
+        </div>
 
-    <!-- Empty State -->
     <div id="emptyState" class="hidden text-center py-20">
         <span class="text-6xl">🤷‍♀️</span>
         <h3 class="text-2xl font-bold text-gray-600 mt-4">We couldn't find that carb!</h3>
         <p class="text-gray-500">Try searching for generic terms like "Bread" or "Fruit".</p>
     </div>
 
-    <!-- Detail Modal -->
     <div id="detailModal" class="fixed inset-0 z-50 hidden">
-        <!-- Backdrop -->
         <div class="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity" onclick="closeModal()"></div>
         
-        <!-- Modal Content -->
         <div class="absolute bottom-0 md:top-1/2 md:left-1/2 md:transform md:-translate-x-1/2 md:-translate-y-1/2 w-full md:w-[600px] h-[85vh] md:h-auto bg-white rounded-t-3xl md:rounded-3xl shadow-2xl overflow-hidden flex flex-col pop-in">
             
-            <!-- Header Image Area -->
             <div id="modalHeader" class="bg-soft-pink p-8 text-center relative shrink-0">
                 <button onclick="closeModal()" class="absolute top-4 right-4 bg-white/50 hover:bg-white p-2 rounded-full transition-colors">
                     <i class="ph ph-x text-xl text-deep-rose"></i>
@@ -144,9 +77,7 @@
                 <div class="mt-2 inline-block px-3 py-1 bg-white/60 rounded-full text-xs font-bold text-deep-rose uppercase tracking-wide">The Naked Carb</div>
             </div>
 
-            <!-- Scrollable Content -->
             <div class="p-6 overflow-y-auto flex-1">
-                <!-- The Spike Info -->
                 <div class="bg-red-50 rounded-2xl p-4 mb-6 border border-red-100">
                     <h4 class="font-bold text-red-800 flex items-center gap-2 mb-1">
                         <i class="ph ph-trend-up text-xl"></i> Why it needs clothes
@@ -160,12 +91,9 @@
                     <i class="ph ph-t-shirt text-deep-rose"></i> Style Your Carb
                 </h3>
 
-                <!-- Suggestions List -->
                 <div id="modalSuggestions" class="space-y-3">
-                    <!-- Suggestion Items injected here -->
-                </div>
+                    </div>
 
-                <!-- Pro Tip -->
                 <div class="mt-8 bg-sage-green/50 rounded-2xl p-4 border border-sage-green">
                     <h4 class="font-bold text-forest-green flex items-center gap-2 mb-1">
                         <i class="ph ph-sparkle text-xl"></i> PCOS Pro Tip
@@ -178,7 +106,6 @@
         </div>
     </div>
 
-    <!-- Info/Educational Modal -->
     <div id="infoModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
         <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" onclick="toggleInfoModal()"></div>
         <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full relative z-10 p-8 pop-in">
@@ -208,295 +135,11 @@
         </div>
     </div>
 
-    <!-- Footer -->
     <footer class="mt-12 text-center text-gray-500 text-sm">
         <p>Made with 💖 for my Cysters</p>
         <p class="mt-1 opacity-60">Not medical advice. Consult your dietitian.</p>
     </footer>
 
-    <!-- JavaScript Data & Logic -->
-    <script>
-        // --- The Database ---
-        const carbData = [
-            // Fruits
-            {
-                id: 1,
-                name: "Apple",
-                emoji: "🍎",
-                category: "fruit",
-                nakedRisk: "Fructose hits the liver quickly; plain fruit causes moderate spikes.",
-                tips: "Always eat the skin for extra fiber!",
-                clothes: [
-                    { name: "Peanut Butter Coat", desc: "1 tbsp natural peanut butter", type: "Fat + Protein" },
-                    { name: "Cheese Hat", desc: "1 string cheese or slice of cheddar", type: "Fat + Protein" },
-                    { name: "Walnut Crunch", desc: "A small handful of raw walnuts", type: "Healthy Fat" }
-                ]
-            },
-            {
-                id: 2,
-                name: "Banana",
-                emoji: "🍌",
-                category: "fruit",
-                nakedRisk: "Very high glycemic index, especially when ripe. Can cause rapid spikes.",
-                tips: "Choose slightly green bananas for more resistant starch (gut healthy!).",
-                clothes: [
-                    { name: "Yogurt Dip", desc: "Dip in full-fat Greek yogurt", type: "Protein" },
-                    { name: "Almond Butter Boat", desc: "Slice lengthwise and spread almond butter", type: "Fat" },
-                    { name: "Protein Smoothie", desc: "Blend with protein powder and spinach", type: "Complete Meal" }
-                ]
-            },
-            {
-                id: 3,
-                name: "Grapes",
-                emoji: "🍇",
-                category: "fruit",
-                nakedRisk: "Often called 'sugar bombs' because they are easy to overeat and high in fast sugar.",
-                tips: "Freeze them for a slower-to-eat treat!",
-                clothes: [
-                    { name: "Cheese Cube Skewers", desc: "Alternate grape and cheddar cube on a toothpick", type: "Fat + Protein" },
-                    { name: "Walnut Pairings", desc: "Eat one walnut for every 2 grapes", type: "Fat" },
-                    { name: "Charcuterie Board", desc: "Pair with salami or turkey slices", type: "Protein" }
-                ]
-            },
-            {
-                id: 4,
-                name: "Berries",
-                emoji: "🍓",
-                category: "fruit",
-                nakedRisk: "Lower glycemic than most fruits, but still better with friends!",
-                tips: "Berries are the best fruit choice for PCOS due to antioxidants.",
-                clothes: [
-                    { name: "Cream Swim", desc: "Bowl of heavy whipping cream or coconut cream", type: "Fat" },
-                    { name: "Cottage Cheese Mix", desc: "Mix into cottage cheese", type: "High Protein" },
-                    { name: "Seed Sprinkle", desc: "Top with chia and hemp seeds", type: "Fiber + Fat" }
-                ]
-            },
-            // Grains
-            {
-                id: 5,
-                name: "White Rice",
-                emoji: "🍚",
-                category: "grain",
-                nakedRisk: "Pure starch that converts to glucose almost instantly.",
-                tips: "Cooling cooked rice and reheating it increases resistant starch!",
-                clothes: [
-                    { name: "The Salmon Tuxedo", desc: "Top with fatty salmon and avocado", type: "Omega-3 Fats" },
-                    { name: "Vinegar Hack", desc: "Eat a side salad with vinegar dressing before the rice", type: "Hack" },
-                    { name: "Veggie Volume", desc: "Mix 50/50 with cauliflower rice", type: "Fiber" }
-                ]
-            },
-            {
-                id: 6,
-                name: "Toast",
-                emoji: "🍞",
-                category: "breakfast",
-                nakedRisk: "Porous texture allows rapid digestion.",
-                tips: "Sourdough is better than standard wheat due to fermentation.",
-                clothes: [
-                    { name: "Avocado Smash", desc: "1/2 Avocado + Hemp seeds + Chili flakes", type: "Healthy Fat" },
-                    { name: "Egg Top", desc: "2 Poached or scrambled eggs on top", type: "Protein" },
-                    { name: "Savory Spread", desc: "Hummus + Cucumber slices", type: "Fiber + Fat" }
-                ]
-            },
-            {
-                id: 7,
-                name: "Oatmeal",
-                emoji: "🥣",
-                category: "breakfast",
-                nakedRisk: "Often marketed as healthy, but plain instant oats are a glucose spike waiting to happen.",
-                tips: "Use steel-cut or rolled oats instead of instant.",
-                clothes: [
-                    { name: "Protein Porridge", desc: "Stir in a scoop of protein powder while cooking", type: "Protein" },
-                    { name: "The Fat Bomb", desc: "Top with tbsp butter/ghee and flax seeds", type: "Fat" },
-                    { name: "Greek Style", desc: "Add a dollop of full-fat Greek yogurt", type: "Protein + Fat" }
-                ]
-            },
-            {
-                id: 8,
-                name: "Pasta",
-                emoji: "🍝",
-                category: "grain",
-                nakedRisk: "Dense carbohydrate source that adds up quickly.",
-                tips: "Cook 'al dente' (firm) for a lower glycemic response.",
-                clothes: [
-                    { name: "Meat Sauce Heavy", desc: "Focus on the Bolognese (meat), light on the noodles", type: "Protein" },
-                    { name: "Veggie Starter", desc: "Eat a plate of roasted broccoli before the pasta", type: "Fiber Coating" },
-                    { name: "Creamy Pesto", desc: "Use a high-fat pesto sauce with pine nuts", type: "Fat" }
-                ]
-            },
-            // Snacks
-            {
-                id: 9,
-                name: "Potato Chips",
-                emoji: "🥔",
-                category: "snack",
-                nakedRisk: "Starch fried in inflammatory oils.",
-                tips: "Portion them out into a bowl, never eat from the bag.",
-                clothes: [
-                    { name: "Guacamole Dip", desc: "Dip every chip in guac", type: "Healthy Fat" },
-                    { name: "Tuna Salad Scoop", desc: "Use chips as a spoon for tuna salad", type: "Protein" },
-                    { name: "Vinegar Shot", desc: "Have a tall glass of water with 1 tbsp ACV before snacking", type: "Hack" }
-                ]
-            },
-            {
-                id: 10,
-                name: "Chocolate",
-                emoji: "🍫",
-                category: "snack",
-                nakedRisk: "High sugar content leads to immediate dopamine and glucose hits.",
-                tips: "Dark chocolate (>70%) is much safer than milk chocolate.",
-                clothes: [
-                    { name: "Dessert Timing", desc: "Eat it immediately after a savory meal, not on an empty stomach", type: "Timing" },
-                    { name: "Nut Butter Sandwich", desc: "Sandwich a layer of almond butter between two squares", type: "Fat" },
-                    { name: "Almond Chaser", desc: "Follow every piece with 3 almonds", type: "Fiber/Fat" }
-                ]
-            },
-            {
-                id: 11,
-                name: "Crackers",
-                emoji: "🍘",
-                category: "snack",
-                nakedRisk: "Dry, processed flour that spikes sugar fast.",
-                tips: "Look for seed-based crackers for better baseline stats.",
-                clothes: [
-                    { name: "Tuna Boat", desc: "Top with canned tuna mixed with mayo", type: "Protein + Fat" },
-                    { name: "Cheese Plate", desc: "Thick slice of cheddar on every cracker", type: "Fat" },
-                    { name: "Hummus Heavy", desc: "More hummus than cracker!", type: "Fiber" }
-                ]
-            },
-            {
-                id: 12,
-                name: "Popcorn",
-                emoji: "🍿",
-                category: "snack",
-                nakedRisk: "It's a whole grain, but high volume means high carb load.",
-                tips: "Air popped is best, but needs fat added back in.",
-                clothes: [
-                    { name: "Parmesan Shower", desc: "Douse in olive oil and parmesan cheese", type: "Fat + Protein" },
-                    { name: "Nut Mix", desc: "Mix 1:1 with peanuts or pecans", type: "Fat" },
-                    { name: "Beef Jerky Side", desc: "Eat alongside a stick of beef jerky", type: "Protein" }
-                ]
-            },
-        ];
-
-        // --- Logic ---
-        
-        const grid = document.getElementById('carbGrid');
-        const searchInput = document.getElementById('searchInput');
-        let currentCategory = 'all';
-
-        function renderCards(data) {
-            grid.innerHTML = '';
-            
-            if (data.length === 0) {
-                document.getElementById('emptyState').classList.remove('hidden');
-                return;
-            } else {
-                document.getElementById('emptyState').classList.add('hidden');
-            }
-
-            data.forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'bg-white rounded-3xl p-6 shadow-sm border border-pink-50 hover:shadow-cute transition-all cursor-pointer flex flex-col items-center text-center group';
-                card.onclick = () => openModal(item);
-                
-                card.innerHTML = `
-                    <div class="text-5xl mb-4 transform group-hover:scale-110 transition-transform">${item.emoji}</div>
-                    <h3 class="text-xl font-bold text-gray-700 mb-1">${item.name}</h3>
-                    <p class="text-xs text-gray-400 font-bold uppercase tracking-wider bg-pink-50 px-2 py-1 rounded-full">${item.category}</p>
-                    <div class="mt-4 w-full bg-soft-pink text-deep-rose py-2 rounded-xl font-bold text-sm opacity-0 group-hover:opacity-100 transition-opacity">
-                        Dress me up! 👗
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
-        }
-
-        function filterCarbs() {
-            const query = searchInput.value.toLowerCase();
-            const filtered = carbData.filter(item => {
-                const matchesSearch = item.name.toLowerCase().includes(query);
-                const matchesCategory = currentCategory === 'all' || item.category === currentCategory;
-                return matchesSearch && matchesCategory;
-            });
-            renderCards(filtered);
-        }
-
-        function filterCategory(cat) {
-            currentCategory = cat;
-            
-            // Update UI buttons
-            document.querySelectorAll('.category-btn').forEach(btn => {
-                if(btn.textContent.toLowerCase().includes(cat === 'all' ? 'all' : cat)) {
-                    btn.classList.remove('bg-white', 'text-gray-600');
-                    btn.classList.add('bg-deep-rose', 'text-white');
-                } else {
-                    btn.classList.add('bg-white', 'text-gray-600');
-                    btn.classList.remove('bg-deep-rose', 'text-white');
-                }
-            });
-
-            filterCarbs();
-        }
-
-        // --- Modal Logic ---
-
-        const modal = document.getElementById('detailModal');
-        const modalTitle = document.getElementById('modalTitle');
-        const modalIcon = document.getElementById('modalIcon');
-        const modalReason = document.getElementById('modalReason');
-        const modalSuggestions = document.getElementById('modalSuggestions');
-        const modalTip = document.getElementById('modalTip');
-
-        function openModal(item) {
-            // Populate Content
-            modalTitle.innerText = item.name;
-            modalIcon.innerText = item.emoji;
-            modalReason.innerText = item.nakedRisk;
-            modalTip.innerText = item.tips;
-
-            // Populate Suggestions
-            modalSuggestions.innerHTML = '';
-            item.clothes.forEach(cloth => {
-                const div = document.createElement('div');
-                div.className = 'bg-white border border-gray-100 p-4 rounded-xl shadow-sm flex items-start gap-3';
-                div.innerHTML = `
-                    <div class="bg-lavender p-2 rounded-full text-grape">
-                        <i class="ph ph-check-circle text-xl"></i>
-                    </div>
-                    <div>
-                        <h5 class="font-bold text-gray-800">${cloth.name}</h5>
-                        <p class="text-sm text-gray-500">${cloth.desc}</p>
-                        <span class="text-xs font-bold text-grape mt-1 inline-block bg-purple-50 px-2 py-0.5 rounded">${cloth.type}</span>
-                    </div>
-                `;
-                modalSuggestions.appendChild(div);
-            });
-
-            // Show Modal
-            modal.classList.remove('hidden');
-            document.body.style.overflow = 'hidden'; // Stop background scrolling
-        }
-
-        function closeModal() {
-            modal.classList.add('hidden');
-            document.body.style.overflow = 'auto';
-        }
-
-        function toggleInfoModal() {
-            const infoModal = document.getElementById('infoModal');
-            if (infoModal.classList.contains('hidden')) {
-                infoModal.classList.remove('hidden');
-                infoModal.classList.add('flex');
-            } else {
-                infoModal.classList.add('hidden');
-                infoModal.classList.remove('flex');
-            }
-        }
-
-        // Initialize
-        renderCards(carbData);
-
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
