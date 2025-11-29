@@ -1,5 +1,8 @@
+import { supabase } from './supabaseClient.js';
+
 // --- The Database ---
-const carbData = [
+// Fallback/Local Data
+const localCarbData = [
     // Fruits
     {
         id: 1,
@@ -161,15 +164,67 @@ const carbData = [
     },
 ];
 
+let carbData = [...localCarbData];
+
 // --- Logic ---
 
 const grid = document.getElementById('carbGrid');
 const searchInput = document.getElementById('searchInput');
 let currentCategory = 'all';
 
+// Fetch data from Supabase
+async function fetchFoods() {
+    try {
+        const { data, error } = await supabase
+            .from('foods')
+            .select('*');
+
+        if (error) {
+            console.warn('Supabase fetch error:', error.message);
+            return;
+        }
+
+        if (data && data.length > 0) {
+            console.log('Fetched foods from Supabase:', data);
+
+            const mappedFoods = data.map(item => {
+                // Generate dynamic advice based on nutrition if missing
+                const isHighCarb = item.carbs_per_100g > 20;
+                const isLowFiber = item.fiber_per_100g < 3;
+
+                let risk = "Contains carbohydrates.";
+                if (isHighCarb && isLowFiber) risk = "High carb & low fiber. Likely to spike blood sugar fast!";
+                else if (isHighCarb) risk = "High carb, but has some fiber.";
+
+                // Default clothes if none (since our DB doesn't have them yet)
+                const clothes = [
+                    { name: "Protein Pair", desc: "Pair with a boiled egg or nuts", type: "Protein" },
+                    { name: "Walk it off", desc: "Go for a 10m walk after eating", type: "Movement" }
+                ];
+
+                return {
+                    id: item.id,
+                    name: item.name,
+                    emoji: '🆕', // Default emoji for new items
+                    category: 'pantry', // Default category
+                    nakedRisk: risk,
+                    tips: `Carbs: ${item.carbs_per_100g}g | Fiber: ${item.fiber_per_100g}g`,
+                    clothes: clothes
+                };
+            });
+
+            // Merge with local data
+            carbData = [...localCarbData, ...mappedFoods];
+            renderCards(carbData);
+        }
+    } catch (err) {
+        console.warn('Supabase not configured or network error.', err);
+    }
+}
+
 function renderCards(data) {
     grid.innerHTML = '';
-    
+
     if (data.length === 0) {
         document.getElementById('emptyState').classList.remove('hidden');
         return;
@@ -181,11 +236,11 @@ function renderCards(data) {
         const card = document.createElement('div');
         card.className = 'bg-white rounded-3xl p-6 shadow-sm border border-pink-50 hover:shadow-cute transition-all cursor-pointer flex flex-col items-center text-center group';
         card.onclick = () => openModal(item);
-        
+
         card.innerHTML = `
-            <div class="text-5xl mb-4 transform group-hover:scale-110 transition-transform">${item.emoji}</div>
+            <div class="text-5xl mb-4 transform group-hover:scale-110 transition-transform">${item.emoji || '🍽️'}</div>
             <h3 class="text-xl font-bold text-gray-700 mb-1">${item.name}</h3>
-            <p class="text-xs text-gray-400 font-bold uppercase tracking-wider bg-pink-50 px-2 py-1 rounded-full">${item.category}</p>
+            <p class="text-xs text-gray-400 font-bold uppercase tracking-wider bg-pink-50 px-2 py-1 rounded-full">${item.category || 'General'}</p>
             <div class="mt-4 w-full bg-soft-pink text-deep-rose py-2 rounded-xl font-bold text-sm opacity-0 group-hover:opacity-100 transition-opacity">
                 Dress me up! 👗
             </div>
@@ -206,14 +261,14 @@ function filterCarbs() {
 
 function filterCategory(cat) {
     currentCategory = cat;
-    
+
     // Update UI buttons
     document.querySelectorAll('.category-btn').forEach(btn => {
         // Simple way to match the category from text content for this specific implementation
         const btnText = btn.textContent.toLowerCase().trim();
         const catName = cat === 'all' ? 'all' : cat;
 
-        if(btnText.includes(catName)) {
+        if (btnText.includes(catName)) {
             btn.classList.remove('bg-white', 'text-gray-600');
             btn.classList.add('bg-deep-rose', 'text-white');
         } else {
@@ -237,13 +292,20 @@ const modalTip = document.getElementById('modalTip');
 function openModal(item) {
     // Populate Content
     modalTitle.innerText = item.name;
-    modalIcon.innerText = item.emoji;
-    modalReason.innerText = item.nakedRisk;
-    modalTip.innerText = item.tips;
+    modalIcon.innerText = item.emoji || '🍽️';
+    modalReason.innerText = item.nakedRisk || 'Eating this alone might spike your sugar.';
+    modalTip.innerText = item.tips || 'Pair with protein or fat!';
 
     // Populate Suggestions
     modalSuggestions.innerHTML = '';
-    item.clothes.forEach(cloth => {
+
+    const clothes = item.clothes || [];
+
+    if (clothes.length === 0) {
+        modalSuggestions.innerHTML = '<p class="text-gray-500 italic">No specific suggestions yet. Try adding some nuts or cheese!</p>';
+    }
+
+    clothes.forEach(cloth => {
         const div = document.createElement('div');
         div.className = 'bg-white border border-gray-100 p-4 rounded-xl shadow-sm flex items-start gap-3';
         div.innerHTML = `
@@ -280,5 +342,13 @@ function toggleInfoModal() {
     }
 }
 
+// Expose functions to window for HTML onclick handlers
+window.filterCarbs = filterCarbs;
+window.filterCategory = filterCategory;
+window.openModal = openModal;
+window.closeModal = closeModal;
+window.toggleInfoModal = toggleInfoModal;
+
 // Initialize
-renderCards(carbData);
+fetchFoods(); // Try to fetch remote data
+renderCards(carbData); // Render local data immediately

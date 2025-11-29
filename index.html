@@ -1,28 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Carb Closet | PCOS Nutrition Helper</title>
-    
+
     <link rel="stylesheet" href="style.css">
-    
+
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
     <script src="tailwind.config.js"></script>
 </head>
+
 <body class="font-body text-gray-700 min-h-screen pb-20">
 
-    <nav class="sticky top-0 z-50 glass-panel shadow-sm px-6 py-4 flex justify-between items-center rounded-b-3xl mx-2 mt-2">
+    <nav
+        class="sticky top-0 z-50 glass-panel shadow-sm px-6 py-4 flex justify-between items-center rounded-b-3xl mx-2 mt-2">
         <div class="flex items-center gap-2">
             <span class="text-3xl">🎀</span>
             <h1 class="font-header text-2xl text-deep-rose">The Carb Closet</h1>
         </div>
-        <button onclick="toggleInfoModal()" class="bg-soft-pink text-deep-rose p-2 rounded-full hover:bg-deep-rose hover:text-white transition-colors">
+        <button onclick="toggleInfoModal()"
+            class="bg-soft-pink text-deep-rose p-2 rounded-full hover:bg-deep-rose hover:text-white transition-colors">
             <i class="ph ph-question text-2xl"></i>
         </button>
     </nav>
@@ -30,15 +35,16 @@
     <div class="max-w-4xl mx-auto px-4 pt-10 pb-6 text-center">
         <h2 class="text-3xl md:text-5xl font-bold text-deep-rose mb-4">Don't Eat Naked Carbs!</h2>
         <p class="text-lg md:text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-            Managing PCOS means loving your hormones. 
-            <span class="font-bold text-deep-rose">"Clothing"</span> your carbs with protein and fats helps flatten the glucose curve and keep insulin in check. ✨
+            Managing PCOS means loving your hormones.
+            <span class="font-bold text-deep-rose">"Clothing"</span> your carbs with protein and fats helps flatten the
+            glucose curve and keep insulin in check. ✨
         </p>
 
         <div class="relative max-w-lg mx-auto transform transition-all hover:scale-105">
             <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                 <i class="ph ph-magnifying-glass text-xl text-deep-rose"></i>
             </div>
-            <input type="text" id="searchInput" placeholder="What carb are you craving? (e.g., Apple, Rice, Toast)" 
+            <input type="text" id="searchInput" placeholder="What carb are you craving? (e.g., Apple, Rice, Toast)"
                 class="w-full pl-12 pr-4 py-4 rounded-full border-2 border-soft-pink focus:border-deep-rose focus:outline-none shadow-cute text-lg bg-white/90"
                 onkeyup="filterCarbs()">
         </div>
@@ -46,16 +52,26 @@
 
     <div class="max-w-4xl mx-auto px-4 mb-8">
         <div class="flex gap-3 overflow-x-auto scrollbar-hide py-2 justify-start md:justify-center">
-            <button onclick="filterCategory('all')" class="category-btn active px-6 py-2 rounded-full bg-deep-rose text-white font-bold shadow-md whitespace-nowrap transition-transform hover:scale-105">All ✨</button>
-            <button onclick="filterCategory('fruit')" class="category-btn px-6 py-2 rounded-full bg-white text-gray-600 font-bold shadow-sm whitespace-nowrap hover:bg-soft-pink transition-transform hover:scale-105">Fruits 🍎</button>
-            <button onclick="filterCategory('grain')" class="category-btn px-6 py-2 rounded-full bg-white text-gray-600 font-bold shadow-sm whitespace-nowrap hover:bg-soft-pink transition-transform hover:scale-105">Grains 🍚</button>
-            <button onclick="filterCategory('breakfast')" class="category-btn px-6 py-2 rounded-full bg-white text-gray-600 font-bold shadow-sm whitespace-nowrap hover:bg-soft-pink transition-transform hover:scale-105">Breakfast 🥣</button>
-            <button onclick="filterCategory('snack')" class="category-btn px-6 py-2 rounded-full bg-white text-gray-600 font-bold shadow-sm whitespace-nowrap hover:bg-soft-pink transition-transform hover:scale-105">Snacks 🥨</button>
+            <button onclick="filterCategory('all')"
+                class="category-btn active px-6 py-2 rounded-full bg-deep-rose text-white font-bold shadow-md whitespace-nowrap transition-transform hover:scale-105">All
+                ✨</button>
+            <button onclick="filterCategory('fruit')"
+                class="category-btn px-6 py-2 rounded-full bg-white text-gray-600 font-bold shadow-sm whitespace-nowrap hover:bg-soft-pink transition-transform hover:scale-105">Fruits
+                🍎</button>
+            <button onclick="filterCategory('grain')"
+                class="category-btn px-6 py-2 rounded-full bg-white text-gray-600 font-bold shadow-sm whitespace-nowrap hover:bg-soft-pink transition-transform hover:scale-105">Grains
+                🍚</button>
+            <button onclick="filterCategory('breakfast')"
+                class="category-btn px-6 py-2 rounded-full bg-white text-gray-600 font-bold shadow-sm whitespace-nowrap hover:bg-soft-pink transition-transform hover:scale-105">Breakfast
+                🥣</button>
+            <button onclick="filterCategory('snack')"
+                class="category-btn px-6 py-2 rounded-full bg-white text-gray-600 font-bold shadow-sm whitespace-nowrap hover:bg-soft-pink transition-transform hover:scale-105">Snacks
+                🥨</button>
         </div>
     </div>
 
     <div id="carbGrid" class="max-w-5xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        </div>
+    </div>
 
     <div id="emptyState" class="hidden text-center py-20">
         <span class="text-6xl">🤷‍♀️</span>
@@ -65,16 +81,20 @@
 
     <div id="detailModal" class="fixed inset-0 z-50 hidden">
         <div class="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity" onclick="closeModal()"></div>
-        
-        <div class="absolute bottom-0 md:top-1/2 md:left-1/2 md:transform md:-translate-x-1/2 md:-translate-y-1/2 w-full md:w-[600px] h-[85vh] md:h-auto bg-white rounded-t-3xl md:rounded-3xl shadow-2xl overflow-hidden flex flex-col pop-in">
-            
+
+        <div
+            class="absolute bottom-0 md:top-1/2 md:left-1/2 md:transform md:-translate-x-1/2 md:-translate-y-1/2 w-full md:w-[600px] h-[85vh] md:h-auto bg-white rounded-t-3xl md:rounded-3xl shadow-2xl overflow-hidden flex flex-col pop-in">
+
             <div id="modalHeader" class="bg-soft-pink p-8 text-center relative shrink-0">
-                <button onclick="closeModal()" class="absolute top-4 right-4 bg-white/50 hover:bg-white p-2 rounded-full transition-colors">
+                <button onclick="closeModal()"
+                    class="absolute top-4 right-4 bg-white/50 hover:bg-white p-2 rounded-full transition-colors">
                     <i class="ph ph-x text-xl text-deep-rose"></i>
                 </button>
                 <div id="modalIcon" class="text-6xl mb-2 wiggle inline-block">🍎</div>
                 <h2 id="modalTitle" class="text-3xl font-header text-deep-rose">Apple</h2>
-                <div class="mt-2 inline-block px-3 py-1 bg-white/60 rounded-full text-xs font-bold text-deep-rose uppercase tracking-wide">The Naked Carb</div>
+                <div
+                    class="mt-2 inline-block px-3 py-1 bg-white/60 rounded-full text-xs font-bold text-deep-rose uppercase tracking-wide">
+                    The Naked Carb</div>
             </div>
 
             <div class="p-6 overflow-y-auto flex-1">
@@ -83,7 +103,8 @@
                         <i class="ph ph-trend-up text-xl"></i> Why it needs clothes
                     </h4>
                     <p id="modalReason" class="text-sm text-red-700 leading-relaxed">
-                        Apples eaten alone can cause a quick spike in blood sugar, followed by a crash that leaves you hungry again.
+                        Apples eaten alone can cause a quick spike in blood sugar, followed by a crash that leaves you
+                        hungry again.
                     </p>
                 </div>
 
@@ -92,7 +113,7 @@
                 </h3>
 
                 <div id="modalSuggestions" class="space-y-3">
-                    </div>
+                </div>
 
                 <div class="mt-8 bg-sage-green/50 rounded-2xl p-4 border border-sage-green">
                     <h4 class="font-bold text-forest-green flex items-center gap-2 mb-1">
@@ -112,7 +133,7 @@
             <button onclick="toggleInfoModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
                 <i class="ph ph-x text-2xl"></i>
             </button>
-            
+
             <div class="text-center mb-6">
                 <span class="text-5xl">👗</span>
                 <h2 class="text-2xl font-header text-deep-rose mt-4">Why "Clothe" Carbs?</h2>
@@ -120,13 +141,18 @@
 
             <div class="space-y-4 text-gray-600 leading-relaxed">
                 <p>
-                    <strong class="text-deep-rose">Naked Carbs</strong> are carbohydrates eaten on their own (like a plain piece of toast or an apple). They digest quickly and turn into glucose, shooting straight into your bloodstream. 🚀
+                    <strong class="text-deep-rose">Naked Carbs</strong> are carbohydrates eaten on their own (like a
+                    plain piece of toast or an apple). They digest quickly and turn into glucose, shooting straight into
+                    your bloodstream. 🚀
                 </p>
                 <p>
-                    For women with <strong class="text-deep-rose">PCOS</strong>, we often have insulin resistance. This means our bodies struggle to bring that sugar down, leading to inflammation, cravings, and hormonal imbalances.
+                    For women with <strong class="text-deep-rose">PCOS</strong>, we often have insulin resistance. This
+                    means our bodies struggle to bring that sugar down, leading to inflammation, cravings, and hormonal
+                    imbalances.
                 </p>
                 <p>
-                    <strong class="text-deep-rose">Clothing Carbs</strong> means adding protein, fat, or fiber. These act like a mesh, slowing down digestion and flattening that glucose curve. 📉
+                    <strong class="text-deep-rose">Clothing Carbs</strong> means adding protein, fat, or fiber. These
+                    act like a mesh, slowing down digestion and flattening that glucose curve. 📉
                 </p>
                 <div class="bg-soft-pink p-4 rounded-xl text-center font-bold text-deep-rose">
                     Happy Hormones = Happy You! 💖
@@ -140,6 +166,7 @@
         <p class="mt-1 opacity-60">Not medical advice. Consult your dietitian.</p>
     </footer>
 
-    <script src="script.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
+
 </html>
